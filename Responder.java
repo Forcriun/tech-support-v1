@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.HashMap;
 
 /**
  * The responder class represents a response generator object.
@@ -12,6 +13,7 @@ public class Responder
 {
     private Random aleatorio;
     private ArrayList<String> respuestas;
+    private HashMap<String,String> responseMap;
     
     /**
      * Constructor de la clase.
@@ -20,6 +22,8 @@ public class Responder
     {
         aleatorio = new Random();
         respuestas = new ArrayList<>();
+        responseMap = new HashMap<>();
+        fillResponseMap();
         
         respuestas.add("Respuesta 1");
         respuestas.add("Respuesta 2");
@@ -29,12 +33,39 @@ public class Responder
     }
 
     /**
-     * Genera una respuesta aleatoria de entre las que
+     * Devuelve una respuesta aleatoria de entre las que
      * conforman la coleccion "respuestas".
      * @return   A string that should be displayed as the response
      */
-    public String generateResponse()
+    public String pickDefaultresponse()
     {
         return respuestas.get(aleatorio.nextInt(respuestas.size()));
+    }
+    
+    /**
+     * Introduce en el HashMap de la clase varias respuestas predeterminadas.
+     */
+    public void fillResponseMap(){
+        responseMap.put("fallo","Por favor indique el tipo de fallo.");
+        responseMap.put("apaga","Pruebe a restablecer los valores de fábrica.");
+        responseMap.put("roto","Indique el producto a reemplazar.");
+        responseMap.put("humo","Corra por su vida...");
+    }
+    
+    /**
+     * Devuelve una respuesta especifica segun la palabra introducida como
+     * parametro por el usuario. Si no existe una respuesta asociada a dicha
+     * palabra devuelve una respuesta aleatoria de la coleccion "respuestas".
+     * @return   A string that should be displayed as the response
+     */
+    public String generateResponse(String userInput){
+        String response = null;
+        response = responseMap.get(userInput);
+        
+        if(response == null){
+            response = pickDefaultresponse();
+        }
+        
+        return response;
     }
 }
