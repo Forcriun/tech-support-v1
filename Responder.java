@@ -15,7 +15,7 @@ public class Responder
 {
     private Random aleatorio;
     private ArrayList<String> respuestas;
-    private HashMap<String,String> responseMap;
+    private HashMap<HashSet<String>,String> responseMap;
 
     /**
      * Constructor de la clase.
@@ -45,29 +45,42 @@ public class Responder
     }
 
     /**
-     * Introduce en el HashMap de la clase varias respuestas predeterminadas.
+     * Introduce en el HashMap de la clase varias respuestas predeterminadas
+     * asociadas a claves de conjuntos de cadenas.
      */
     public void fillResponseMap(){
-        responseMap.put("fallo","Por favor indique el tipo de fallo.");
-        responseMap.put("apaga","Pruebe a restablecer los valores de fábrica.");
-        responseMap.put("roto","Indique el producto a reemplazar.");
-        responseMap.put("humo","Corra por su vida...");
+        HashSet<String> set001 = new HashSet<>();
+        set001.add("free");
+        set001.add("app");
+
+        HashSet<String> set002 = new HashSet<>();
+        set002.add("free");
+
+        HashSet<String> set003 = new HashSet<>();
+        set003.add("app");
+
+        HashSet<String> set004 = new HashSet<>();
+        set004.add("problem");
+        set004.add("crash");
+        set004.add("linux");
+
+        responseMap.put(set001, "Respuesta \"free app\"/\"app free\"");
+        responseMap.put(set002, "Respuesta \"free\"");
+        responseMap.put(set003, "Respuesta \"app\"");
+        responseMap.put(set004, "Respuesta \"problem crash linux/crash linux problem\"");
     }
 
     /**
      * Devuelve una respuesta especifica segun la palabra introducida como
-     * parametro por el usuario. Si no existe una respuesta asociada a dicha
-     * palabra devuelve una respuesta aleatoria de la coleccion "respuestas".
+     * parametro por el usuario (sensible a conjuntos de palabras). Si no
+     * existe una respuesta asociada a dicha palabra devuelve una respuesta
+     * aleatoria de la coleccion "respuestas".
      * @return   A string that should be displayed as the response
      */
     public String generateResponse(HashSet<String> userInput){
         String response = null;
-        Iterator<String> it = userInput.iterator();
-        
-        while(it.hasNext() && response == null){
-            response = responseMap.get(it.next());
-        }
-        
+        response = responseMap.get(userInput);
+
         if(response == null){
             response = pickDefaultresponse();
         }
