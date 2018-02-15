@@ -36,12 +36,23 @@ public class Responder
 
     /**
      * Devuelve una respuesta aleatoria de entre las que
-     * conforman la coleccion "respuestas".
+     * conforman la coleccion "respuestas". Las respuestas no se repiten,
+     * y cuando se agotan se el sistema informa de que no entiende la pregunta.
      * @return   A string that should be displayed as the response
      */
     public String pickDefaultresponse()
     {
-        return respuestas.get(aleatorio.nextInt(respuestas.size()));
+        String defaultResponse = null;
+        
+        if(respuestas.size() > 0){
+            defaultResponse = respuestas.get(aleatorio.nextInt(respuestas.size()));
+            respuestas.remove(defaultResponse);
+        }
+        else{
+            defaultResponse = "Sorry, I don't understand your request.";
+        }
+        
+        return defaultResponse;
     }
 
     /**
