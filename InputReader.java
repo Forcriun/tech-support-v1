@@ -29,8 +29,11 @@ public class InputReader
     public String getInput()
     {
         System.out.print("> ");         // print prompt
-        String inputLine = reader.nextLine();
-
+        String inputLine = reader.nextLine().toLowerCase().trim();
+        
+        String[] wordArray = inputLine.split(" ");  // Divide palabras por espacios y las añade a un array.
+        inputLine = wordArray[0];   // Asi devuelve solo la primera palabra.
+        
         return inputLine;
     }
 }
