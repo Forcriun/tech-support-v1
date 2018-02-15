@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 
 /**
  * The responder class represents a response generator object.
@@ -61,8 +62,10 @@ public class Responder
      */
     public String generateResponse(HashSet<String> userInput){
         String response = null;
-        for(String word : userInput){
-            response = responseMap.get(word);
+        Iterator<String> it = userInput.iterator();
+        
+        while(it.hasNext() && response == null){
+            response = responseMap.get(it.next());
         }
         
         if(response == null){
