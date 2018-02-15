@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * The responder class represents a response generator object.
@@ -14,7 +15,7 @@ public class Responder
     private Random aleatorio;
     private ArrayList<String> respuestas;
     private HashMap<String,String> responseMap;
-    
+
     /**
      * Constructor de la clase.
      */
@@ -24,7 +25,7 @@ public class Responder
         respuestas = new ArrayList<>();
         responseMap = new HashMap<>();
         fillResponseMap();
-        
+
         respuestas.add("Respuesta 1");
         respuestas.add("Respuesta 2");
         respuestas.add("Respuesta 3");
@@ -41,7 +42,7 @@ public class Responder
     {
         return respuestas.get(aleatorio.nextInt(respuestas.size()));
     }
-    
+
     /**
      * Introduce en el HashMap de la clase varias respuestas predeterminadas.
      */
@@ -51,21 +52,23 @@ public class Responder
         responseMap.put("roto","Indique el producto a reemplazar.");
         responseMap.put("humo","Corra por su vida...");
     }
-    
+
     /**
      * Devuelve una respuesta especifica segun la palabra introducida como
      * parametro por el usuario. Si no existe una respuesta asociada a dicha
      * palabra devuelve una respuesta aleatoria de la coleccion "respuestas".
      * @return   A string that should be displayed as the response
      */
-    public String generateResponse(String userInput){
+    public String generateResponse(HashSet<String> userInput){
         String response = null;
-        response = responseMap.get(userInput);
+        for(String word : userInput){
+            response = responseMap.get(word);
+        }
         
         if(response == null){
             response = pickDefaultresponse();
         }
-        
+
         return response;
     }
 }

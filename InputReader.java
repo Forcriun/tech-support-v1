@@ -26,14 +26,18 @@ public class InputReader
      *
      * @return  A String typed by the user.
      */
-    public String getInput()
+    public HashSet<String> getInput()
     {
         System.out.print("> ");         // print prompt
         String inputLine = reader.nextLine().toLowerCase().trim();
+        HashSet<String> words = new HashSet<>();
         
         String[] wordArray = inputLine.split(" ");  // Divide palabras por espacios y las añade a un array.
-        inputLine = wordArray[0];   // Asi devuelve solo la primera palabra.
+        // Añade las palabras a un conjunto
+        for(String word : wordArray){
+            words.add(word);
+        }
         
-        return inputLine;
+        return words;
     }
 }
